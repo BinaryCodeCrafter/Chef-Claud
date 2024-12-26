@@ -1,32 +1,24 @@
+import React from "react";
+import Ingredients from "./Ingredients";
+import Recipe from "./Recipe";
+import Form from "./Form";
 export default function Main() {
 
-    const ingredients = ["totato" , "apple" , "bread"];
-    
-    function handleSubmit(event){
-        event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        const ingredient = formData.get("ingredient");
-        ingredients.push(ingredient);
-        alert([ingredients])
-    }
+  const [ingredients, setIngredients] = React.useState([]);
+  const [recipe , setRecipe] = React.useState("")
 
-    return (
-        <main>
-            <form onSubmit={handleSubmit} className="add-ingredient-form">
-                <input 
-                    type="text"
-                    placeholder="e.g. oregano"
-                    aria-label="Add ingredient"
-                    name="ingredient"
-                />
-                <button>Add ingredient</button>
-            </form>
+  return (
+    <main>
+      <Form ingredients={ingredients} setIngredients={setIngredients} />
 
-            <ul>
-                {ingredients.map((element , index) => (
-                    <li key={index}>{element}</li>
-                ))}
-            </ul>
-        </main>
-    )
+      {ingredients.length > 0 && (
+        <Ingredients
+          setRecipe = {setRecipe}
+          Ingredients={ingredients}
+        />
+      )}
+
+      {recipe && <Recipe recipe = {recipe}/>}
+    </main>
+  );
 }
